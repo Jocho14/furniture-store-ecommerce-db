@@ -39,9 +39,20 @@ CREATE TABLE accounts (
 	email VARCHAR(255) UNIQUE NOT NULL,
 	password_hash VARCHAR(255) NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	ACTIVE BIT DEFAULT 1 NOT NULL,
+	ACTIVE BIT DEFAULT B'1' NOT NULL,
 	
 -- Set relation between users and accounts
+	FOREIGN KEY (user_id)
+		REFERENCES users(user_id)
+		ON DELETE CASCADE
+);
+
+-- Create clients table
+CREATE TABLE clients (
+	client_id SERIAL PRIMARY KEY,
+	user_id INT UNIQUE NOT NULL,
+	
+-- Set relation between clients and users
 	FOREIGN KEY (user_id)
 		REFERENCES users(user_id)
 		ON DELETE CASCADE
@@ -79,5 +90,75 @@ CREATE TABLE reviews (
 		ON DELETE CASCADE,
 	FOREIGN KEY (product_id)
 		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+-- Create table orders
+CREATE TABLE orders (
+	order_id SERIAL PRIMARY KEY, 
+	client_id INT UNIQUE NOT NULL, 
+	total_price INT NOT NULL,
+	
+-- Set relation between orders and clients
+	FOREIGN KEY (client_id)
+		REFERENCES clients(client_id)
+		ON DELETE CASCADE
+);
+
+-- Create table order_products
+CREATE TABLE orders_products (
+	order_id INT UNIQUE NOT NULL,
+	product_id INT UNIQUE NOT NULL,
+	product_price INT NOT NULL,
+	quantity INT NOT NULL,
+	PRIMARY KEY (order_id, product_id),
+	
+-- Set relation between orders and products
+	FOREIGN KEY (order_id) 
+		REFERENCES orders(order_id) 
+		ON DELETE CASCADE,
+	FOREIGN KEY (product_id)
+		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+-- Create table returns
+CREATE TABLE "returns" (
+	return_id SERIAL PRIMARY KEY, 
+	order_id INT UNIQUE NOT NULL, 
+	total_price INT NOT NULL,
+	
+-- Set relation between orders and clients
+	FOREIGN KEY (order_id)
+		REFERENCES orders(order_id)
+		ON DELETE CASCADE
+);
+
+-- Create table return_products
+CREATE TABLE returns_products (
+	return_id INT UNIQUE NOT NULL,
+	product_id INT UNIQUE NOT NULL,
+	product_price INT NOT NULL,
+	quantity INT NOT NULL,
+	PRIMARY KEY (return_id, product_id),
+	
+-- Set relation between returns and products
+	FOREIGN KEY (return_id) 
+		REFERENCES "returns"(return_id) 
+		ON DELETE CASCADE,
+	FOREIGN KEY (product_id)
+		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+-- Create table images
+CREATE TABLE images (
+	image_id INT PRIMARY KEY,
+	product_id INT NOT NULL,
+	image_url VARCHAR(255) NOT NULL,
+	
+-- Set relation between images and products
+	FOREIGN KEY (product_id)
+		REFERENCES products(product_id) 
 		ON DELETE CASCADE
 );
