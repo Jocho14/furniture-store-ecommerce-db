@@ -49,14 +49,14 @@ jobs:
 
       - name: Wait for PostgreSQL to be ready
         run: |
-          until pg_isready -h ${{ secrets.DB_HOST }} -p ${{ secrets.DB_PORT }} -U "${{ secrets.DB_USER }}"; do
+          until pg_isready -h localhost -p 5432 -U postgres; do
             echo "Waiting for postgres to be ready..."
             sleep 1
           done
 
       - name: Run Database Migrations
         run: |
-          psql -h ${{ secrets.DB_HOST }} -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }} -f ./schema/create_tables.sql
+          psql -h localhost -U postgres -d ${{ secrets.DB_NAME }} -f ./schema/create_tables.sql
 
       - name: Run Tests
         run: npm test
