@@ -22,4 +22,4 @@ DROP TABLE IF EXISTS clients;
 
 DROP TABLE IF EXISTS accounts;
 
-DROP TABLE IF EXISTS users;  -- Main table
+DROP TABLE IF EXISTS users; -- Main table
