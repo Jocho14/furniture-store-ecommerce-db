@@ -56,7 +56,9 @@ jobs:
 
       - name: Run Database Migrations
         run: |
-          psql -h localhost -U postgres -d ${{ secrets.DB_NAME }} -f ./schema/create_tables.sql
+          export DB_USER="${{ secrets.DB_USER }}"
+
+          psql -h localhost -U $DB_USER -d ${{ secrets.DB_NAME }} -f ./schema/create_tables.sql
 
       - name: Run Tests
         run: npm test
