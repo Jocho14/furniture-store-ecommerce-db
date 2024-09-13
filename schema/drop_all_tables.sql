@@ -1,16 +1,25 @@
-DROP TABLE users_addresses;
-DROP TABLE orders_products;
-DROP TABLE returns_products;
-DROP TABLE accounts_favourites_products;
+DROP TABLE IF EXISTS users_addresses;
 
-DROP TABLE images;
-DROP TABLE addresses;
-DROP TABLE reviews;
-DROP TABLE products;
-DROP TABLE "returns";
-DROP TABLE orders;
+DROP TABLE IF EXISTS orders_products;
 
-DROP TABLE clients;
-DROP TABLE accounts;
-DROP TABLE users; -- Main table
+DROP TABLE IF EXISTS returns_products;
 
+DROP TABLE IF EXISTS accounts_favourites_products;
+
+DROP TABLE IF EXISTS images;
+
+DROP TABLE IF EXISTS addresses;
+
+DROP TABLE IF EXISTS reviews;
+
+DROP TABLE IF EXISTS products;
+
+DROP TABLE IF EXISTS "returns";
+
+DROP TABLE IF EXISTS orders;
+
+DROP TABLE IF EXISTS clients;
+
+DROP TABLE IF EXISTS accounts;
+
+DROP TABLE IF EXISTS users; -- Main table

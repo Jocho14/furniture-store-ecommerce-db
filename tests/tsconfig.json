@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "../",
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["./*"],
+      "@tests/*": ["./tests/*"],
+      "@src/*": ["./tests/src/*"]
+    },
+    "types": ["node", "jest"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
