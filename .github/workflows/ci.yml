@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - integration
-  pull_request:
-    branches:
-      - master
 
 jobs:
   test:
@@ -60,3 +57,27 @@ jobs:
 
       - name: Run Tests
         run: npm test --prefix ./tests
+
+  create_pull_request:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: integration
+          base: master
+          title: "Auto merge integration into master"
+          body: "This PR is automatically created after tests passed."
+
+    merge_pull_request:
+      needs: create_pull_request
+      runs-on: ubuntu-latest
+      steps:
+        - name: Merge Pull Request
+          uses: peter-evans/merge@v3
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            pull-request: ${{ steps.create_pull_request.outputs.pull-request-number }}
+            method: merge
