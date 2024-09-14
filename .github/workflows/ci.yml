@@ -5,6 +5,10 @@ on:
     branches:
       - integration
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   test:
     name: db-test
@@ -63,22 +67,39 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Create Pull Request
+        id: create_pr
+        if: success()
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: integration
           base: master
-          title: "Auto merge integration into master"
-          body: "This PR is automatically created after tests passed."
+          head: integration
+          title: "Auto PR from integration to master"
+          body: "This pull request was automatically created by GitHub Actions."
+          branch: integration-pr
 
   merge_pull_request:
     needs: create_pull_request
     runs-on: ubuntu-latest
+
     steps:
-      - name: Merge Pull Request
-        uses: peter-evans/merge@v3
+      - name: Auto Merge PR
+        if: success() && steps.create_pr.outputs.pull-request-url
+        uses: actions/github-script@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request: ${{ steps.create_pull_request.outputs.pull-request-number }}
-          method: merge
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            await github.pulls.merge({
+              owner,
+              repo,
+              pull_number: prNumber,
+              merge_method: merge
+            });
