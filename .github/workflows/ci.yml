@@ -72,7 +72,7 @@ jobs:
           title: "Auto merge integration into master"
           body: "This PR is automatically created after tests passed."
 
-    merge_pull_request:
+    automerge:
       needs: create_pull_request
       runs-on: ubuntu-latest
       steps:
