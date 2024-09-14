@@ -1,0 +1,27 @@
+name: Auto PR
+
+on:
+  push:
+    branches:
+      - integration
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: master
+          commit-message: "Auto Merge"
+          title: "Auto PR for changes from integration"
+          body: "Automated PR generated from integration"
+          auto-merge: false
