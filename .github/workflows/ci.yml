@@ -63,7 +63,11 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Create Pull Request
+        id: create_pr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -76,9 +80,12 @@ jobs:
     needs: create_pull_request
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Merge Pull Request
         uses: peter-evans/merge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request: ${{ steps.create_pull_request.outputs.pull-request-number }}
+          pull-request: ${{ steps.create_pr.outputs.pull-request-number }}
           method: merge
