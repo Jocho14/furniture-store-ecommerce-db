@@ -72,13 +72,13 @@ jobs:
           title: "Auto merge integration into master"
           body: "This PR is automatically created after tests passed."
 
-    automerge:
-      needs: create_pull_request
-      runs-on: ubuntu-latest
-      steps:
-        - name: Merge Pull Request
-          uses: peter-evans/merge@v3
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            pull-request: ${{ steps.create_pull_request.outputs.pull-request-number }}
-            method: merge
+  merge_pull_request:
+    needs: create_pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge Pull Request
+        uses: peter-evans/merge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request: ${{ steps.create_pull_request.outputs.pull-request-number }}
+          method: merge
