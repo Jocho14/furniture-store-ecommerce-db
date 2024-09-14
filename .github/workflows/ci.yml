@@ -19,6 +19,7 @@ jobs:
     services:
       db:
         image: postgres:latest
+
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
