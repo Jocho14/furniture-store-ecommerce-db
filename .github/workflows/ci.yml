@@ -62,3 +62,22 @@ jobs:
 
       - name: Run Tests
         run: npm test --prefix ./tests
+
+  create_pull_request:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        id: create_pr
+        if: success()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          head: integration
+          title: "Auto PR from integration to master"
+          body: "This pull request was automatically created by GitHub Actions."
+          branch: integration-pr
