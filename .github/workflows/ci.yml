@@ -5,6 +5,9 @@ on:
     branches:
       - integration
 
+permissions:
+  contents: write
+
 jobs:
   test:
     name: db-test
