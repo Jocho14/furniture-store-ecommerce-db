@@ -80,4 +80,4 @@ jobs:
           head: integration
           title: "Auto PR from integration to master"
           body: "This pull request was automatically created by GitHub Actions."
-          branch: integration-pr
+          branch: integration
