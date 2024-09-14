@@ -86,9 +86,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Merge Pull Request
-        uses: peter-evans/merge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request: ${{ steps.create_pr.outputs.pull-request-number }}
-          method: merge
+      - name: Enable Pull Request Automerge
+            run: gh pr merge --merge --auto "1"
+            env:
+              GH_TOKEN: ${{ secrets.PAT }}
