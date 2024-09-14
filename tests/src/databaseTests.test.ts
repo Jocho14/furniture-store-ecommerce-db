@@ -19,7 +19,7 @@ describe("Database insert test", () => {
     expect(
       await client.query(
         `INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
-          VALUES ('John', 'Doe', '1234567890', '1990-01-01')`
+          VALUES ('Jake', 'Doe', '1234567890', '1990-01-01')`
       )
     ).resolves;
   });
