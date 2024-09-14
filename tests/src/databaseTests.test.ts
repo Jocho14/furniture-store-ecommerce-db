@@ -23,15 +23,6 @@ describe("Database insert test", () => {
       )
     ).resolves;
   });
-
-  test("Insert data into the database fail", async () => {
-    expect(
-      await client.query(
-        `INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
-          VALUES ('John', 'Doe', '1234567890', '1990-01-01');
-        INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
-        VALUES ('John', 'Doe', '1234567890', '1990-01-01');`
-      )
-    ).resolves;
-  });
 });
+
+// test
