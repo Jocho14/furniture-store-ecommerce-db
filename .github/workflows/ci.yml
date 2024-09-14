@@ -58,4 +58,4 @@ jobs:
           psql -h localhost -U postgres -d furnitureStoreEcommerceDB -f ./schema/create_tables.sql
 
       - name: Run Tests
-        run: npm test
+        run: npm test --prefix ./tests
