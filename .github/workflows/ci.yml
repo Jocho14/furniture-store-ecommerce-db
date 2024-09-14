@@ -83,7 +83,7 @@ jobs:
           branch: integration
 
   auto-merge:
-    if: github.event.pull_request.labels.*.name == 'auto-merge'
+    needs: create_pull_request
     runs-on: ubuntu-latest
 
     steps:
