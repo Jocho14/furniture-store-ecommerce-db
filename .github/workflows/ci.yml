@@ -35,6 +35,11 @@ jobs:
           --health-retries 5
 
     steps:
+      - name: Check environment variables
+        run: |
+          echo "DB host from env secrets: $DB_HOST"
+          echo "DB host from repo secrets: $DB_HOST2"
+
       - name: Checkout Code
         uses: actions/checkout@v3
 
