@@ -81,7 +81,6 @@ jobs:
           title: "Auto PR from integration to master"
           body: "This pull request was automatically created by GitHub Actions."
           branch: integration
-  name: Auto Merge PR
 
   auto-merge:
     if: github.event.pull_request.labels.*.name == 'auto-merge'
