@@ -93,5 +93,5 @@ jobs:
       - name: Auto Merge PR
         uses: pascalgn/automerge-action@v0.16.3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: merge
