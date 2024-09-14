@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    name: db-test
     runs-on: ubuntu-latest
     env:
       DB_USER: ${{ secrets.DB_USER }}
