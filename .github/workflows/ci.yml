@@ -73,6 +73,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: integration
+          fetch-depth: 0
 
       - name: Merge changes to master
         run: |
