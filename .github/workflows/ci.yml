@@ -91,9 +91,8 @@ jobs:
       - name: Checkout master branch
         run: git checkout master
 
-      - name: Merge integration into master with custom commit message
-        run: |
-          git merge --no-ff refs/heads/integration -m "${{ env.commit_message }}"
-
+      - name: Rebase integration branch onto master
+      run: git rebase integration
+      
       - name: Push changes to master
-        run: git push origin master
+        run: git push origin master --force-with-lease
