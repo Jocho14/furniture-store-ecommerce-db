@@ -95,4 +95,4 @@ jobs:
         run: git rebase integration
 
       - name: Push changes to master
-        run: git push origin master --force-with-lease
+        run: git push origin master
