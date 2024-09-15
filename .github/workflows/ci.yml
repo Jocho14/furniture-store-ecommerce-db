@@ -3,7 +3,9 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - integration
+      - "**"
+      - "!master"
+      - "!main"
   pull_request:
     branches:
       - master
@@ -93,7 +95,12 @@ jobs:
 
       - name: Merge integration into master with custom commit message
         run: |
-          git rebase integration
+          git merge --no-ff refs/heads/integration -m "Merging from ${{ github.ref_name }}: ${{ env.commit_message }}"
 
       - name: Push changes to master
         run: git push origin master
+
+      - name: Delete integration/dev branch
+        if: ${{ github.ref_name != 'master' && github.ref_name != 'main' }}
+        run: |
+          git push origin --delete ${{ github.ref_name }}
