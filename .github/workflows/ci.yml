@@ -93,7 +93,7 @@ jobs:
 
       - name: Merge integration into master with custom commit message
         run: |
-          git rebase refs/heads/integration
+          git rebase integration
 
       - name: Push changes to master
         run: git push origin master
