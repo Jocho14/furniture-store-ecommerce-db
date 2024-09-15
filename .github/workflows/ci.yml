@@ -77,11 +77,26 @@ jobs:
           ref: integration
           fetch-depth: 0
 
-      - name: Merge changes to master
+      - name: Set up Git user
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get the latest commit message from integration
+        id: get_commit_message
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout master
-          git merge ${{ github.ref }} --no-ff
-      - name: Push changes
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "commit_message=$LAST_COMMIT_MSG" >> $GITHUB_ENV
+
+      - name: Checkout master branch
+        run: git checkout master
+
+      - name: Squash and merge integration into master
+        run: git merge --squash refs/heads/integration
+
+      - name: Commit changes with the message from integration
+        run: |
+          git commit -m "${{ env.commit_message }}"
+
+      - name: Push changes to master
         run: git push origin master
