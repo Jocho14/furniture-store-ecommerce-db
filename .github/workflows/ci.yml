@@ -93,7 +93,7 @@ jobs:
 
       - name: Merge integration into master with custom commit message
         run: |
-          git merge --ff-only refs/heads/integration -m "${{ env.commit_message }}"
+          git rebase refs/heads/integration -m "${{ env.commit_message }}"
 
       - name: Push changes to master
         run: git push origin master
