@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - integration
+  pull_request:
+    branches:
+      - master
 
 permissions:
   contents: write
@@ -62,3 +65,23 @@ jobs:
 
       - name: Run Tests
         run: npm test --prefix ./tests
+
+  merge:
+    if: success()
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: integration
+          fetch-depth: 0
+
+      - name: Merge changes to master
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout master
+          git merge ${{ github.ref }} --no-ff
+      - name: Push changes
+        run: git push origin master
