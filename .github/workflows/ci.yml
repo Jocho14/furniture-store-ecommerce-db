@@ -76,7 +76,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: integration
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Set up Git user
@@ -84,7 +84,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Get the latest commit message from integration
+      - name: Get the latest commit message from ${{ github.ref_name }}
         id: get_commit_message
         run: |
           LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
@@ -93,9 +93,9 @@ jobs:
       - name: Checkout master branch
         run: git checkout master
 
-      - name: Merge integration into master with custom commit message
+      - name: Merge ${{ github.ref_name }} into master with custom commit message
         run: |
-          git merge --no-ff refs/heads/integration -m "Merging from ${{ github.ref_name }}: ${{ env.commit_message }}"
+          git merge --no-ff refs/heads/${{ github.ref_name }} -m "Merging from ${{ github.ref_name }}: ${{ env.commit_message }}"
 
       - name: Push changes to master
         run: git push origin master
