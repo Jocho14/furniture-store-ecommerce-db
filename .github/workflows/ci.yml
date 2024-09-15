@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - integration
+  pull_request:
+    branches:
+      - master
 
 permissions:
   contents: write
@@ -63,35 +66,19 @@ jobs:
       - name: Run Tests
         run: npm test --prefix ./tests
 
-  create_pull_request:
+  merge:
+    if: success()
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create Pull Request
-        id: create_pr
-        if: success()
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: master
-          head: integration
-          title: "Auto PR from integration to master"
-          body: "This pull request was automatically created by GitHub Actions."
-          branch: integration
-
-  auto-merge:
-    needs: create_pull_request
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Auto Merge PR
-        uses: pascalgn/automerge-action@v0.16.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: merge
+      - name: Merge changes to master
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout master
+          git merge ${{ github.ref }} --no-ff
+      - name: Push changes
+        run: git push origin master
