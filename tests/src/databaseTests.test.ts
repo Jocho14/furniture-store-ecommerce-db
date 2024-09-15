@@ -23,6 +23,15 @@ describe("Database insert test", () => {
       )
     ).resolves;
   });
+
+  test("Insert data into the database", async () => {
+    expect(
+      await client.query(
+        `INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
+          VALUES ('Jake', 'Doe', '1234567890', '1990-01-01')`
+      )
+    ).resolves;
+  });
 });
 
 // this should merge with commit message from integration
