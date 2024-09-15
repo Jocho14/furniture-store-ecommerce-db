@@ -78,9 +78,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Git user
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Get the latest commit message from integration
         id: get_commit_message
@@ -91,12 +91,9 @@ jobs:
       - name: Checkout master branch
         run: git checkout master
 
-      - name: Squash and merge integration into master
-        run: git merge --squash refs/heads/integration
-
-      - name: Commit changes with the message from integration
+      - name: Merge integration into master with custom commit message
         run: |
-          git commit -m "${{ env.commit_message }}"
+          git merge --no-ff refs/heads/integration -m "${{ env.commit_message }}"
 
       - name: Push changes to master
         run: git push origin master
