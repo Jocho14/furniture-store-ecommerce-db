@@ -1,20 +1,6 @@
-import "module-alias/register";
-import { client } from "@/tests/src/databaseConfig";
-import { prepareDatabase } from "@/tests/src/databaseConfig";
-import { ErrorMessages } from "@/tests/src/enums/errorMessages";
+import { setupDatabaseTests, client, ErrorMessages } from "../databaseSetup";
 
-beforeAll(async () => {
-  await client.connect();
-  await client.query("SET lc_messages = 'en_US.UTF-8'");
-});
-
-beforeEach(async () => {
-  await prepareDatabase();
-});
-
-afterAll(async () => {
-  await client.end();
-});
+setupDatabaseTests();
 
 describe("Database duplicates validation", () => {
   test("Should throw phone number unique constraint error", async () => {

@@ -11,8 +11,8 @@
     "baseUrl": "..",
     "paths": {
       "@/*": ["./*"],
-      "@tests/*": ["./tests/*"],
-      "@src/*": ["./tests/src/*"]
+      "@test/*": ["./test/*"],
+      "@src/*": ["./test/src/*"]
     },
     "types": ["node", "jest"]
   },

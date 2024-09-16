@@ -1,7 +1,6 @@
 import { Client } from "pg";
 import * as dotenv from "dotenv";
-
-import { runSQLScript } from "@/tests/src/utils/sqlHelpers";
+import { runSQLScript } from "@/test/src/utils/sqlHelpers";
 
 dotenv.config();
 
