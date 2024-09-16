@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS orders_products;
 
 DROP TABLE IF EXISTS returns_products;
 
-DROP TABLE IF EXISTS accounts_favourites_products;
+DROP TABLE IF EXISTS clients_favourites_products;
 
 DROP TABLE IF EXISTS images;
 

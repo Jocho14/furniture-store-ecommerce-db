@@ -61,14 +61,14 @@ CREATE TABLE
 		description TEXT
 	);
 
--- Create accounts_favourites_products table
+-- Create clients_favourites_products table
 CREATE TABLE
-	accounts_favourites_products (
-		account_id INT NOT NULL,
+	clients_favourites_products (
+		client_id INT NOT NULL,
 		product_id INT NOT NULL,
-		PRIMARY KEY (account_id, product_id),
-		-- Set relation between accounts and products
-		FOREIGN KEY (account_id) REFERENCES accounts (account_id) ON DELETE CASCADE,
+		PRIMARY KEY (client_id, product_id),
+		-- Set relation between clients and products
+		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE CASCADE,
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);
 
