@@ -52,7 +52,7 @@ jobs:
           node-version: "20"
 
       - name: Install Dependencies
-        run: npm ci --prefix ./test
+        run: npm ci
 
       - name: Wait for PostgreSQL to be ready
         run: |
@@ -63,10 +63,10 @@ jobs:
 
       - name: Run Database Migrations
         run: |
-          psql -h ${{ secrets.DB_HOST }} -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }} -f ./schema/create_tables.sql
+          psql -h ${{ secrets.DB_HOST }} -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }} -f ./src/schema/create_tables.sql
 
       - name: Run Tests
-        run: npm test --prefix ./test
+        run: npm test
 
   merge:
     if: success()
