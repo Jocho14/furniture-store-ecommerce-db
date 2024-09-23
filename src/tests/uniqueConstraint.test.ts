@@ -1,4 +1,4 @@
-import { setupDatabaseTests, client, ErrorMessages } from "../databaseSetup";
+import { setupDatabaseTests, client, ErrorMessages } from "@/tests/conftest";
 
 setupDatabaseTests();
 
