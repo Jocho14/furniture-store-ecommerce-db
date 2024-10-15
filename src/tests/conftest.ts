@@ -3,10 +3,11 @@ import { client } from "@/databaseConfig";
 import { runSQLScript } from "@/utils/sqlHelpers";
 import { ErrorMessages } from "@/enums/errorMessages";
 
-const prepareDatabase = async () => {
+export const prepareDatabase = async () => {
   await runSQLScript("@/schema/drop_all_tables.sql", client);
   await runSQLScript("@/schema/add_extensions.sql", client);
   await runSQLScript("@/schema/create_tables.sql", client);
+  await runSQLScript("@/schema/create_indexes.sql", client);
 };
 
 export const setupDatabaseTests = () => {

@@ -3,7 +3,7 @@ import { setupDatabaseTests, client, ErrorMessages } from "@/tests/conftest";
 setupDatabaseTests();
 
 describe("Database duplicates validation", () => {
-  test("Should throw phone number unique constraint error", async () => {
+  test("Should not allow inserting duplicated phone number", async () => {
     await client.query(`
         INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
         VALUES ('A', 'A', '+48123123123', '1990-01-01');
@@ -17,7 +17,7 @@ describe("Database duplicates validation", () => {
     ).rejects.toThrow(ErrorMessages.UniqueConstraint);
   });
 
-  test("Should throw email unique constraint error", async () => {
+  test("Should not allow inserting duplicated email address", async () => {
     const firstRes = await client.query(`
       INSERT INTO users (first_name, last_name, phone_number, date_of_birth) 
       VALUES ('A', 'A', '+48111111111', '1990-01-01') 
@@ -47,6 +47,25 @@ describe("Database duplicates validation", () => {
         `,
         [second_user_id]
       )
+    ).rejects.toThrow(ErrorMessages.UniqueConstraint);
+  });
+
+  test("Should not allow setting more than one thumbnail per product", async () => {
+    await client.query(`
+        INSERT INTO products (name, price, description) 
+        VALUES ('Chair', 199.99, 'Cool chair');
+      `);
+
+    await client.query(`
+        INSERT INTO images (product_id, url, alt, is_thumbnail) 
+        VALUES (1, 'https://example', 'Chair', TRUE);
+      `);
+
+    await expect(
+      client.query(`
+          INSERT INTO images (product_id, url, alt, is_thumbnail) 
+          VALUES (1, 'https://example2', 'Chair', TRUE);
+        `)
     ).rejects.toThrow(ErrorMessages.UniqueConstraint);
   });
 });
