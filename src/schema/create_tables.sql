@@ -57,7 +57,7 @@ CREATE TABLE
 	products (
 		product_id SERIAL PRIMARY KEY,
 		"name" VARCHAR(255) NOT NULL,
-		price INT NOT NULL,
+		price NUMERIC(10,2) NOT NULL,
 		description TEXT
 	);
 
@@ -88,7 +88,7 @@ CREATE TABLE
 	orders (
 		order_id SERIAL PRIMARY KEY,
 		client_id INT UNIQUE NOT NULL,
-		total_price INT NOT NULL,
+		total_price NUMERIC(10,2) NOT NULL,
 		-- Set relation between orders and clients
 		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE CASCADE
 	);
@@ -98,7 +98,7 @@ CREATE TABLE
 	orders_products (
 		order_id INT UNIQUE NOT NULL,
 		product_id INT UNIQUE NOT NULL,
-		product_price INT NOT NULL,
+		product_price NUMERIC(10,2) NOT NULL,
 		quantity INT NOT NULL,
 		PRIMARY KEY (order_id, product_id),
 		-- Set relation between orders and products
@@ -111,7 +111,7 @@ CREATE TABLE
 	"returns" (
 		return_id SERIAL PRIMARY KEY,
 		order_id INT UNIQUE NOT NULL,
-		total_price INT NOT NULL,
+		total_price NUMERIC(10,2) NOT NULL,
 		-- Set relation between orders and clients
 		FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
 	);
@@ -121,7 +121,7 @@ CREATE TABLE
 	returns_products (
 		return_id INT UNIQUE NOT NULL,
 		product_id INT UNIQUE NOT NULL,
-		product_price INT NOT NULL,
+		product_price NUMERIC(10,2) NOT NULL,
 		quantity INT NOT NULL,
 		PRIMARY KEY (return_id, product_id),
 		-- Set relation between returns and products
@@ -132,10 +132,11 @@ CREATE TABLE
 -- Create table images
 CREATE TABLE
 	images (
-		image_id INT PRIMARY KEY,
+		image_id SERIAL PRIMARY KEY,
 		product_id INT NOT NULL,
 		url VARCHAR(255) NOT NULL,
-		alt VARCHAR(255),
+		alt VARCHAR(255) NOT NULL,
+		is_thumbnail BOOL DEFAULT FALSE NOT NULL,
 		-- Set relation between images and products
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);

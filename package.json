@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand --detectOpenHandles",
-    "build": "tsc"
+    "build": "tsc",
+    "create-db": "ts-node src/run/createEmptyDatabase.ts"
   },
   "_moduleAliases": {
     "@": "./src"
