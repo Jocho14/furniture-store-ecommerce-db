@@ -78,6 +78,9 @@ CREATE TABLE
 		review_id SERIAL PRIMARY KEY,
 		user_id INT NOT NULL,
 		product_id INT NOT NULL,
+		rating INT NOT NULL,
+		comment TEXT,
+		review_date DATE DEFAULT CURRENT_DATE,
 		-- Set relation between users and products
 		FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
@@ -138,5 +141,26 @@ CREATE TABLE
 		alt VARCHAR(255) NOT NULL,
 		is_thumbnail BOOL DEFAULT FALSE NOT NULL,
 		-- Set relation between images and products
+		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
+	);
+
+-- Create table warehouses
+CREATE TABLE
+	warehouses (
+		warehouse_id SERIAL PRIMARY KEY,
+		name VARCHAR(255) NOT NULL,
+		location VARCHAR(255) -- add extension for geolocation
+	);
+
+-- Create table warehouse_products
+CREATE TABLE
+	products_warehouses (
+		warehouse_id INT NOT NULL,
+		product_id INT NOT NULL,
+		quantity INT NOT NULL,
+		last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY (warehouse_id, product_id),
+		-- Set relation between warehouses and products
+		FOREIGN KEY (warehouse_id) REFERENCES warehouses (warehouse_id) ON DELETE CASCADE,
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);
