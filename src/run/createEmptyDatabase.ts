@@ -1,4 +1,10 @@
 import { prepareDatabase } from "../tests/conftest";
 import { client } from "@/databaseConfig";
 
-prepareDatabase(client);
+const createEmptyDatabase = async () => {
+  await client.connect();
+  await prepareDatabase(client);
+  await client.end();
+};
+
+createEmptyDatabase();
