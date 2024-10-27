@@ -8,9 +8,9 @@ export const prepareDatabase = async (client: Client) => {
   await runSQLScript("@/schema/delete_db.sql", client);
   await runSQLScript("@/schema/create_db.sql", client);
   await runSQLScript("@/schema/drop_all_tables.sql", client);
-  await runSQLScript("@/schema/add_extensions.sql", client);
   await runSQLScript("@/schema/create_tables.sql", client);
   await runSQLScript("@/schema/create_indexes.sql", client);
+  await runSQLScript("@/data/initial_data.sql", client);
 };
 
 export const setupDatabaseTests = () => {
