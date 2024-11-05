@@ -58,7 +58,8 @@ CREATE TABLE
 		product_id SERIAL PRIMARY KEY,
 		"name" VARCHAR(255) NOT NULL,
 		price NUMERIC(10,2) NOT NULL,
-		description TEXT
+		description TEXT,
+		is_active BOOL DEFAULT TRUE NOT NULL
 	);
 
 -- Create clients_favourites_products table
