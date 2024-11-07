@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS clients_favourites_products;
 
 DROP TABLE IF EXISTS images;
 
+DROP TABLE IF EXISTS categories;
+
 DROP TABLE IF EXISTS warehouses;
 
 DROP TABLE IF EXISTS addresses;

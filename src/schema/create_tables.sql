@@ -145,6 +145,16 @@ CREATE TABLE
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);
 
+-- Create table categories
+CREATE TABLE
+	categories (
+		category_id SERIAL PRIMARY KEY,
+		product_id INT NOT NULL,
+		name VARCHAR(255) NOT NULL,
+		-- Set relation between images and products
+		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
+	);
+
 -- Create table warehouses
 CREATE TABLE
 	warehouses (
