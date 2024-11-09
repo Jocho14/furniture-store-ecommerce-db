@@ -77,13 +77,13 @@ CREATE TABLE
 CREATE TABLE
 	reviews (
 		review_id SERIAL PRIMARY KEY,
-		user_id INT NOT NULL,
+		client_id INT NOT NULL,
 		product_id INT NOT NULL,
 		rating INT NOT NULL,
 		comment TEXT,
 		review_date DATE DEFAULT CURRENT_DATE,
 		-- Set relation between users and products
-		FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE CASCADE,
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);
 
