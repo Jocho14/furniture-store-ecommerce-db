@@ -52,6 +52,15 @@ CREATE TABLE
 		FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 	);
 
+-- Create employees table
+CREATE TABLE
+	employees (
+		employee_id SERIAL PRIMARY KEY,
+		user_id INT UNIQUE NOT NULL,
+		-- Set relation between employees and users
+		FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+	);
+
 -- Create products table
 CREATE TABLE
 	products (
