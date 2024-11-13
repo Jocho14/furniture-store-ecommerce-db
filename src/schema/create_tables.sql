@@ -96,52 +96,6 @@ CREATE TABLE
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);
 
--- Create table orders
-CREATE TABLE
-	orders (
-		order_id SERIAL PRIMARY KEY,
-		client_id INT UNIQUE NOT NULL,
-		total_price NUMERIC(10,2) NOT NULL,
-		-- Set relation between orders and clients
-		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE CASCADE
-	);
-
--- Create table order_products
-CREATE TABLE
-	orders_products (
-		order_id INT UNIQUE NOT NULL,
-		product_id INT UNIQUE NOT NULL,
-		product_price NUMERIC(10,2) NOT NULL,
-		quantity INT NOT NULL,
-		PRIMARY KEY (order_id, product_id),
-		-- Set relation between orders and products
-		FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
-		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
-	);
-
--- Create table returns
-CREATE TABLE
-	"returns" (
-		return_id SERIAL PRIMARY KEY,
-		order_id INT UNIQUE NOT NULL,
-		total_price NUMERIC(10,2) NOT NULL,
-		-- Set relation between orders and clients
-		FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
-	);
-
--- Create table return_products
-CREATE TABLE
-	returns_products (
-		return_id INT UNIQUE NOT NULL,
-		product_id INT UNIQUE NOT NULL,
-		product_price NUMERIC(10,2) NOT NULL,
-		quantity INT NOT NULL,
-		PRIMARY KEY (return_id, product_id),
-		-- Set relation between returns and products
-		FOREIGN KEY (return_id) REFERENCES "returns" (return_id) ON DELETE CASCADE,
-		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
-	);
-
 -- Create table images
 CREATE TABLE
 	images (
@@ -182,5 +136,54 @@ CREATE TABLE
 		PRIMARY KEY (warehouse_id, product_id),
 		-- Set relation between warehouses and products
 		FOREIGN KEY (warehouse_id) REFERENCES warehouses (warehouse_id) ON DELETE CASCADE,
+		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
+	);
+
+-- Create table guests
+CREATE TABLE
+	guests (
+		guest_id SERIAL PRIMARY KEY,
+		first_name VARCHAR(50) NOT NULL,
+		last_name VARCHAR(50) NOT NULL,
+		phone_number VARCHAR(15) NOT NULL,
+		email VARCHAR(255) UNIQUE NOT NULL
+	);
+
+-- Create table shipping_addresses
+CREATE TABLE
+	shipping_addresses (
+		shipping_address_id SERIAL PRIMARY KEY,
+		street_address VARCHAR(120) NOT NULL,
+		house_number VARCHAR(10) NOT NULL,
+		apartment_number VARCHAR(10),
+		city VARCHAR(120) NOT NULL,
+		postal_code VARCHAR(20) NOT NULL
+	);
+
+-- Create table orders
+CREATE TABLE
+	orders (
+		order_id SERIAL PRIMARY KEY,
+		client_id INT,
+		guest_id INT,
+		shipping_address_id INT NOT NULL,
+		total_amount NUMERIC(10,2) NOT NULL,
+		order_date DATE DEFAULT CURRENT_DATE,
+		-- Set relation between orders and clients, guests, and shipping_addresses
+		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE SET NULL,
+		FOREIGN KEY (guest_id) REFERENCES guests (guest_id) ON DELETE SET NULL,
+		FOREIGN KEY (shipping_address_id) REFERENCES shipping_addresses (shipping_address_id) ON DELETE CASCADE
+	);
+
+-- Create table order_products
+CREATE TABLE
+	orders_products (
+		order_id INT UNIQUE NOT NULL,
+		product_id INT UNIQUE NOT NULL,
+		product_price NUMERIC(10,2) NOT NULL,
+		quantity INT NOT NULL,
+		PRIMARY KEY (order_id, product_id),
+		-- Set relation between orders and products
+		FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
 		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 	);

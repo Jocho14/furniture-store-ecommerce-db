@@ -24,10 +24,14 @@ DROP TABLE IF EXISTS "returns";
 
 DROP TABLE IF EXISTS orders;
 
+DROP TABLE IF EXISTS shipping_addresses;
+
+DROP TABLE IF EXISTS guests;
+
 DROP TABLE IF EXISTS clients;
 
 DROP TABLE IF EXISTS employees;
 
 DROP TABLE IF EXISTS accounts;
 
-DROP TABLE IF EXISTS users; -- Main table
+DROP TABLE IF EXISTS users;
