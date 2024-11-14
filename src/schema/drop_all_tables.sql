@@ -35,3 +35,5 @@ DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS accounts;
 
 DROP TABLE IF EXISTS users;
+
+DROP TYPE IF EXISTS order_status;

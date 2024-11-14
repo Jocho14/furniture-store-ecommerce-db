@@ -146,7 +146,7 @@ CREATE TABLE
 		first_name VARCHAR(50) NOT NULL,
 		last_name VARCHAR(50) NOT NULL,
 		phone_number VARCHAR(15) NOT NULL,
-		email VARCHAR(255) UNIQUE NOT NULL
+		email VARCHAR(255) NOT NULL
 	);
 
 -- Create table shipping_addresses
@@ -160,6 +160,9 @@ CREATE TABLE
 		postal_code VARCHAR(20) NOT NULL
 	);
 
+-- Create enum for order status
+CREATE TYPE order_status AS ENUM ('pending', 'completed', 'canceled');
+
 -- Create table orders
 CREATE TABLE
 	orders (
@@ -169,6 +172,7 @@ CREATE TABLE
 		shipping_address_id INT NOT NULL,
 		total_amount NUMERIC(10,2) NOT NULL,
 		order_date DATE DEFAULT CURRENT_DATE,
+		status order_status DEFAULT 'pending' NOT NULL,
 		-- Set relation between orders and clients, guests, and shipping_addresses
 		FOREIGN KEY (client_id) REFERENCES clients (client_id) ON DELETE SET NULL,
 		FOREIGN KEY (guest_id) REFERENCES guests (guest_id) ON DELETE SET NULL,
