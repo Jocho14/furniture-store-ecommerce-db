@@ -182,8 +182,8 @@ CREATE TABLE
 -- Create table order_products
 CREATE TABLE
 	orders_products (
-		order_id INT UNIQUE NOT NULL,
-		product_id INT UNIQUE NOT NULL,
+		order_id INT NOT NULL,
+		product_id INT NOT NULL,
 		product_price NUMERIC(10,2) NOT NULL,
 		quantity INT NOT NULL,
 		PRIMARY KEY (order_id, product_id),
