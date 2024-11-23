@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users_addresses;
 
 DROP TABLE IF EXISTS orders_products;
 
-DROP TABLE IF EXISTS returns_products;
+DROP TABLE IF EXISTS products_categories;
 
 DROP TABLE IF EXISTS products_warehouses;
 
