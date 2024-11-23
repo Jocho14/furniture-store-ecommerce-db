@@ -112,18 +112,25 @@ CREATE TABLE
 CREATE TABLE
 	categories (
 		category_id SERIAL PRIMARY KEY,
-		product_id INT NOT NULL,
-		name VARCHAR(255) NOT NULL,
-		-- Set relation between images and products
-		FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
+		name VARCHAR(255) NOT NULL
 	);
+
+-- Create table products_categories
+CREATE TABLE products_categories (
+	product_id INT NOT NULL,
+	category_id INT NOT NULL,
+    PRIMARY KEY (product_id, category_id),
+	-- Set relation between products and categories
+	FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+);
 
 -- Create table warehouses
 CREATE TABLE
 	warehouses (
 		warehouse_id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
-		location VARCHAR(255) -- add extension for geolocation
+		location VARCHAR(255)
 	);
 
 -- Create table warehouse_products
