@@ -8,6 +8,7 @@
     "build": "tsc",
     "create-db": "ts-node src/run/createEmptyDatabase.ts",
     "create-db-prod": "ts-node src/run/createEmptyDatabaseProd.ts",
+    "create-db-test": "ts-node src/run/createEmptyDatabaseTest.ts",
     "run-script": "ts-node src/run/runScript.ts"
   },
   "_moduleAliases": {
